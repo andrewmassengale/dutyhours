@@ -151,3 +151,7 @@ function onListening() {
 	console.log('Express server listening on port ' + addr.port + ' in ' + app.get('env') + ' mode.');
 	debug('Listening on ' + bind);
 }
+
+process.on('uncaughtException', function(err) {
+	console.error(err.stack);
+});
