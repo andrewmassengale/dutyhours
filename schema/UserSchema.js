@@ -88,7 +88,7 @@ userSchema.statics.findMultipleUsersById = function (ids, callback) {
 userSchema.methods.filterSchedule = function (startDate, endDate) {
 	var user = this;
 
-	return _(user.toJSON().schedule)
+	var t = _(user.toJSON().schedule)
 		.chain()
 		.filter(function (item) {
 			var start = moment(item.startDate);
@@ -96,9 +96,12 @@ userSchema.methods.filterSchedule = function (startDate, endDate) {
 
 			return (start.isBetween(startDate, endDate) && end.isBetween(startDate, endDate));
 		})
-		.sort('startDate')
-		.reverse()
+		.sortBy(function (item) {
+			return moment(item.startDate).toDate();
+		})
 		.value();
+
+	return t;
 };
 
 /**
