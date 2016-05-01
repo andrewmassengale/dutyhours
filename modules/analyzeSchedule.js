@@ -58,7 +58,7 @@ module.exports.analyze = function (startDate, endDate, schedule) {
  * @return {Number} Returns the number of hours the two times are from each other.
  */
 function timeDiff(t1, t2) {
-	return moment(t1).diff(moment(t2), 'hours', true);
+	return t1.diff(t2, 'hours', true);
 }
 
 /**
@@ -79,6 +79,8 @@ function timeDiff(t1, t2) {
 function getTimeOffDurations(startDate, endDate, schedule) {
 	var durationsHash = { timeOff: [ ], shifts: [ ] };
 	var scheduleLength = schedule.length;
+	startDate = moment(startDate);
+	endDate = moment(endDate);
 
 	for (var i = 0; i < scheduleLength; ++i) {
 		var timeOffDiff = 1, shiftDiff;
@@ -86,18 +88,18 @@ function getTimeOffDurations(startDate, endDate, schedule) {
 		// calculate the time between shifts using the start of the current shift diffed from
 		// the end of the previous shift (don't do this for the first shift)
 		if (i === 0) {
-			timeOffDiff = timeDiff(schedule[i].startDate, startDate);
+			timeOffDiff = timeDiff(moment.unix(schedule[i].startDate), startDate);
 		} else {
-			timeOffDiff = timeDiff(schedule[i].startDate, schedule[i - 1].endDate);
+			timeOffDiff = timeDiff(moment.unix(schedule[i].startDate), moment.unix(schedule[i - 1].endDate));
 		}
 		durationsHash.timeOff.push(timeOffDiff);
 		if (i === scheduleLength - 1) {
-			timeOffDiff = timeDiff(endDate, schedule[i - 1].endDate);
+			timeOffDiff = timeDiff(endDate, moment.unix(schedule[i].endDate));
 			durationsHash.timeOff.push(timeOffDiff);
 		}
 
 		// diff the end of the current shift from the beggining of the current shift
-		shiftDiff = timeDiff(schedule[i].endDate, schedule[i].startDate);
+		shiftDiff = timeDiff(moment.unix(schedule[i].endDate), moment.unix(schedule[i].startDate));
 		durationsHash.shifts.push(shiftDiff);
 	}
 

@@ -14,6 +14,11 @@ module.exports = {
 				daysOffLength: 24,
 				daysOffMonth: 4,
 				shiftMaximumLength: 24
+			},
+			scheduleCreator: {
+				numWeeks: 4,
+				startTime: { hours: 0, minutes: 0, seconds: 0 },
+				endTime: { hours: 23, minutes: 59, seconds: 59 }
 			}
 		};
 	},
@@ -29,6 +34,11 @@ module.exports = {
 				daysOffLength: 24,
 				daysOffMonth: 4,
 				shiftMaximumLength: 24
+			},
+			scheduleCreator: {
+				numWeeks: 4,
+				startTime: { hours: 0, minutes: 0, seconds: 0 },
+				endTime: { hours: 23, minutes: 59, seconds: 59 }
 			}
 		};
 	},
@@ -44,6 +54,11 @@ module.exports = {
 				daysOffLength: 24,
 				daysOffMonth: 4,
 				shiftMaximumLength: 24
+			},
+			scheduleCreator: {
+				numWeeks: 4,
+				startTime: { hours: 0, minutes: 0, seconds: 0 },
+				endTime: { hours: 23, minutes: 59, seconds: 59 }
 			}
 		};
 	}

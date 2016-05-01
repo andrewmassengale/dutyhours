@@ -19,8 +19,8 @@ var userSchema = schema_require('UserSchema');
  * 	POST /api/user
  *
  * @method createUser
- * @param {String} name     The full name of the new user
- * @param {String} email    The email address of the new user
+ * @param {String} name The full name of the new user
+ * @param {String} email The email address of the new user
  * @param {String} username The username of the new user
  * @param {String} password The password of the new user
  * @return {Object} Returns the following object:
@@ -52,8 +52,8 @@ module.exports.createUser = function (req, callback) {
  *
  * @method addUserScheduleItem
  * @param {String} userID The id of the user you are adding a schedule item to should be in the URL of the request as outlined above.
- * @param {Number} start  The start date/time of the new schedule item. The date should be sent as a UNIX timestamp.
- * @param {Number} end    The end date/time of the new schedule item. The date should be sent as a UNIX timestamp.
+ * @param {Number} start The start date/time of the new schedule item. The date should be sent as a UNIX timestamp.
+ * @param {Number} end The end date/time of the new schedule item. The date should be sent as a UNIX timestamp.
  * @return {Object} Returns the following object:
  *
  * 	{
@@ -62,8 +62,8 @@ module.exports.createUser = function (req, callback) {
  */
 module.exports.addUserScheduleItem = function (req, callback) {
 	var scheduleData = {
-		startDate: moment(parseInt(req.body.start, 10)),
-		endDate: moment(parseInt(req.body.end, 10))
+		startDate: moment.unix(req.body.start),
+		endDate: moment.unix(req.body.end)
 	};
 
 	req.user.addScheduleItem(scheduleData, function (err, user) {
@@ -175,17 +175,23 @@ module.exports.getMultipleSchedules = function (req, callback) {
  */
 function getScheduleReturn(user, start, analyze) {
 	var startDate = moment(start);
-	startDate.set('hour', 0).set('minute', 0).set('second', 0);
-	endDate = startDate.clone().add(4, 'weeks'); // make sure to clone first, since .add() overwrites the original object
-	endDate.set('hour', 23).set('minute', 59).set('second', 59);
+	startDate
+		.set('hour', DUTYHOURS.config.scheduleCreator.startTime.hours)
+		.set('minute', DUTYHOURS.config.scheduleCreator.startTime.minutes)
+		.set('second', DUTYHOURS.config.scheduleCreator.startTime.seconds);
+	endDate = startDate.clone().add(DUTYHOURS.config.scheduleCreator.numWeeks, 'weeks'); // make sure to clone first, since .add() overwrites the original object
+	endDate
+		.set('hour', DUTYHOURS.config.scheduleCreator.endTime.hours)
+		.set('minute', DUTYHOURS.config.scheduleCreator.endTime.minutes)
+		.set('second', DUTYHOURS.config.scheduleCreator.endTime.seconds);
 
 	var filteredSchedule = user.filterSchedule(startDate, endDate);
 	var returnObj = {
 		userID: user._id.toString(),
 		schedule: _(filteredSchedule).map(function (item) {
 			return {
-				startDate: parseInt(moment(item.startDate).format('x'), 10),
-				endDate: parseInt(moment(item.endDate).format('x'), 10)
+				startDate: moment(item.startDate).unix(),
+				endDate: moment(item.endDate).unix()
 			};
 		})
 	};

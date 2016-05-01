@@ -32,3 +32,4 @@ Some next steps I would take would be:
 * Adding a layer of security to the users. Right now all of the passwords are stored in plaintext, which is very insecure. These should be salted and hashed.
 * Adding a layer of security to the API calls, preferably via Passport.
 * Add some unit tests using Jasmine
+* Add a linter via a task runner of some sort (like Grunt) to lint my code before I check it in
