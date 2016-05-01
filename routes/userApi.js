@@ -1,3 +1,10 @@
+/**
+ * Handles all of the logic for the API calls for all functions that are user related.
+ *
+ * @class userApi
+ * @static
+ * @constructor
+ */
 var _ = require('underscore');
 var moment = require('moment');
 var async = require('async');
@@ -6,6 +13,23 @@ var analyzeSchedule = module_require('analyzeSchedule');
 
 var userSchema = schema_require('UserSchema');
 
+/**
+ * Creates a new user.
+ *
+ * 	POST /api/user
+ *
+ * @method createUser
+ * @param {String} name     The full name of the new user
+ * @param {String} email    The email address of the new user
+ * @param {String} username The username of the new user
+ * @param {String} password The password of the new user
+ * @return {Object} Returns the following object:
+ *
+ * 	{
+ * 		success: true,
+ * 		userID: String // the new user's ID
+ * 	}
+ */
 module.exports.createUser = function (req, callback) {
 	var newUserData = {
 		name: req.body.name,
@@ -21,6 +45,21 @@ module.exports.createUser = function (req, callback) {
 	});
 };
 
+/**
+ * Adds a schedule item to an existing user.
+ *
+ * 	POST /api/user/:userID/schedule
+ *
+ * @method addUserScheduleItem
+ * @param {String} userID The id of the user you are adding a schedule item to should be in the URL of the request as outlined above.
+ * @param {Number} start  The start date/time of the new schedule item. The date should be sent as a UNIX timestamp.
+ * @param {Number} end    The end date/time of the new schedule item. The date should be sent as a UNIX timestamp.
+ * @return {Object} Returns the following object:
+ *
+ * 	{
+ * 		success: true
+ * 	}
+ */
 module.exports.addUserScheduleItem = function (req, callback) {
 	var scheduleData = {
 		startDate: moment(parseInt(req.body.start, 10)),
@@ -33,11 +72,64 @@ module.exports.addUserScheduleItem = function (req, callback) {
 	});
 };
 
+/**
+ * Gets a schedule for a specific user. The date range is calcuated as the start date passed in plus 4 weeks.
+ *
+ * 	GET /api/user/:userID/schedule
+ *
+ * @method getSingleSchedule
+ * @see analyzeSchedule See the analyze schedule class for implementation details on how a schedule is analyzed.
+ * @param {String} userID The id of the user you are getting a schedule for should be in the URL of the request as outlined above.
+ * @param {String} start  The start date of the user's schedule
+ * @param {Number} [analyze=0] Whether or not to analyze the user's schedule.
+ * @return {Object} Returns the following object:
+ *
+ * 	{
+ * 		success: true,
+ * 		schedule: {
+ * 			userID: String,
+ * 			schedule: [ {
+ * 				startDate: Date,
+ * 				endDate: Date
+ * 			},
+ * 			...
+ * 			],
+ * 			analysis: Analysis // only added if the `analyze` option is set to 1
+ * 		}
+ * 	}
+ */
 module.exports.getSingleSchedule = function (req, callback) {
 	var schedule = getScheduleReturn(req.user, req.query.start, req.query.analyze);
 	callback(null, { success: true, schedule: schedule });
 };
 
+/**
+ * Gets a schedule for multiple users. The date range is calcuated as the start date passed in plus 4 weeks.
+ *
+ * 	GET /api/user/schedule
+ *
+ * @method getMultipleSchedules
+ * @see analyzeSchedule See the analyze schedule class for implementation details on how a schedule is analyzed.
+ * @param {String} ids A list of user IDs separated by commas that you want to get schedules for.
+ * @param {String} start The start date of the user's schedule
+ * @return {Object} Returns the following object:
+ *
+ * 	{
+ * 		success: true,
+ * 		schedules: [ {
+ * 			userID: String,
+ * 			schedule: [ {
+ * 				startDate: Date,
+ * 				endDate: Date
+ * 			},
+ * 			...
+ * 			],
+ * 			analysis: Analysis
+ * 		},
+ * 		...
+ * 		]
+ * 	}
+ */
 module.exports.getMultipleSchedules = function (req, callback) {
 	async.waterfall([
 		function getUsers(cb) {
@@ -60,10 +152,31 @@ module.exports.getMultipleSchedules = function (req, callback) {
 	});
 };
 
+/**
+ * Helper function that gets the schedule for a single user.
+ *
+ * @method getScheduleReturn
+ * @private
+ * @param {Object} user The user object you are getting a modified schedule for.
+ * @param {String} start The start date the schedule should start at.
+ * @param {Boolean} analyze=false Whether or not to analyze the schedule for invalid schedule entries.
+ * @return {Object} Returns the following object:
+ *
+ * 	{
+ * 		userID: String,
+ * 		schedule: [ {
+ * 			startDate: Date,
+ * 			endDate: Date
+ * 		},
+ * 		...
+ * 		],
+ * 		analysis: Analysis // only added if the analyze param is set to true
+ * 	}
+ */
 function getScheduleReturn(user, start, analyze) {
 	var startDate = moment(start);
 	startDate.set('hour', 0).set('minute', 0).set('second', 0);
-	endDate = startDate.clone().add(4, 'weeks'); // make sure to clone first, since .add() overwrites the original
+	endDate = startDate.clone().add(4, 'weeks'); // make sure to clone first, since .add() overwrites the original object
 	endDate.set('hour', 23).set('minute', 59).set('second', 59);
 
 	var filteredSchedule = user.filterSchedule(startDate, endDate);

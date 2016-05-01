@@ -48,10 +48,12 @@ module.exports = function (app) {
 	});
 }
 
+// checks to make sure all of the inputs are valid
 function invalidInput(input, test) {
 	return _(input).chain().keys().intersection(test).value().length !== test.length;
 }
 
+// handles the return of the api function handlers
 function manageApiReturn(res, next, err, results) {
 	if (err) next(err);
 	else res.json(results);
