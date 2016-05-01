@@ -1,0 +1,48 @@
+{ 
+    "_id" : ObjectId("5724256820f3df200bbf2051"), 
+    "name" : "Andrew Massengale", 
+    "email" : "andrew.massengale@gmail.com", 
+    "username" : "amassengale", 
+    "password" : "massengale", 
+    "schedule" : [
+        {
+            "startDate" : ISODate("2016-04-30T13:00:00.000+0000"), 
+            "endDate" : ISODate("2016-05-01T17:00:00.000+0000"), 
+            "_id" : ObjectId("5724b252c94bab242339ea3c")
+        }, 
+        {
+            "startDate" : ISODate("2016-04-28T19:00:00.000+0000"), 
+            "endDate" : ISODate("2016-04-29T17:00:00.000+0000"), 
+            "_id" : ObjectId("5724b357c94bab242339ea3d")
+        }, 
+        {
+            "startDate" : ISODate("2016-04-28T13:00:00.000+0000"), 
+            "endDate" : ISODate("2016-04-28T17:00:00.000+0000"), 
+            "_id" : ObjectId("5724b370c94bab242339ea3e")
+        }
+    ]
+}
+{ 
+    "_id" : ObjectId("5724f4b40563b5640633a0a9"), 
+    "name" : "Andrew Massengale2", 
+    "email" : "andrew.massengale2@gmail.com", 
+    "username" : "amassengale2", 
+    "password" : "massengale2", 
+    "schedule" : [
+        {
+            "startDate" : ISODate("2016-04-30T13:00:00.000+0000"), 
+            "endDate" : ISODate("2016-05-01T17:00:00.000+0000"), 
+            "_id" : ObjectId("5724b252c94bab242339ea3c")
+        }, 
+        {
+            "startDate" : ISODate("2016-04-28T19:00:00.000+0000"), 
+            "endDate" : ISODate("2016-04-29T17:00:00.000+0000"), 
+            "_id" : ObjectId("5724b357c94bab242339ea3d")
+        }, 
+        {
+            "startDate" : ISODate("2016-04-28T13:00:00.000+0000"), 
+            "endDate" : ISODate("2016-04-28T17:00:00.000+0000"), 
+            "_id" : ObjectId("5724b370c94bab242339ea3e")
+        }
+    ]
+}

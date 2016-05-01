@@ -1,0 +1,133 @@
+{
+	"id": "d89c420c-4c6f-fcda-796a-44c6f00d1a78",
+	"name": "Premise Health: Duty Hours",
+	"description": "API Calls list for the Duty Hourse coding challenge for Premise Health.",
+	"order": [
+		"a95d9707-232b-338e-2133-73a22b0e3f48",
+		"c303f4b7-f502-a13c-4fcf-38e8f65cc923",
+		"4c3f67e3-7ed5-8af8-7364-9a435e248fc3",
+		"c356850e-dee1-435f-4546-e5cb44d56e57"
+	],
+	"folders": [],
+	"timestamp": 1462038229743,
+	"owner": "245220",
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "4c3f67e3-7ed5-8af8-7364-9a435e248fc3",
+			"headers": "",
+			"url": "http://localhost:3000/api/user/5724256820f3df200bbf2051/schedule?start=2016-04-28&analyze=1",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "d89c420c-4c6f-fcda-796a-44c6f00d1a78",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get Schedule",
+			"description": "Gets a schedule for a specific user. Optionally analyzes their schedule.",
+			"descriptionFormat": "html",
+			"time": 1462038337799,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "a95d9707-232b-338e-2133-73a22b0e3f48",
+			"headers": "",
+			"url": "http://localhost:3000/api/user",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "name",
+					"value": "Andrew Massengale",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "andrew.massengale2@gmail.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "username",
+					"value": "amassengale",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "massengale",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1462137754174,
+			"name": "Add user",
+			"description": "Create a new user.",
+			"collectionId": "d89c420c-4c6f-fcda-796a-44c6f00d1a78",
+			"responses": []
+		},
+		{
+			"id": "c303f4b7-f502-a13c-4fcf-38e8f65cc923",
+			"headers": "",
+			"url": "http://localhost:3000/api/user/5724256820f3df200bbf2051/schedule",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "d89c420c-4c6f-fcda-796a-44c6f00d1a78",
+			"data": [
+				{
+					"key": "start",
+					"value": "1461848400000",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "end",
+					"value": "1461862800000",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"name": "Add Schedule Item",
+			"description": "Adds a schedule item to an existing user.",
+			"descriptionFormat": "html",
+			"time": 1462038308527,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "c356850e-dee1-435f-4546-e5cb44d56e57",
+			"headers": "",
+			"url": "http://localhost:3000/api/user/schedule?ids=5724256820f3df200bbf2051,5724f4b40563b5640633a0a9&start=2016-04-28&analyze=1",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1462064438576,
+			"name": "Get Schedule Multiple",
+			"description": "Gets a schedule for multiple users. Optionally analyzes their schedules.",
+			"collectionId": "d89c420c-4c6f-fcda-796a-44c6f00d1a78",
+			"responses": []
+		}
+	]
+}
