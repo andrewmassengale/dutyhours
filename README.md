@@ -1,6 +1,6 @@
 # Duty Hours App
 
-This app is intended to be an API for the Duty Hours app.
+This app is intended to be an API webservice for the Duty Hours app.
 
 ## About the app
 
@@ -23,7 +23,7 @@ To run the app, simply run the command `node app` from the root of the project.
 
 ## Testing the app
 
-I've included an export of my Postman REST request, which you can import to run API calls against the app.
+I've included an export of my Postman REST requests, which you can import to run API calls against the app.
 
 ## Next steps
 
